@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { AuthProvider } from "@/context/auth-context";
 import { Toaster } from "@/components/layout/Toaster";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
   title: "AI Social Studio — AI Social Media Growth Platform",
@@ -21,6 +22,8 @@ export default function RootLayout({
           {children}
           <Toaster />
         </AuthProvider>
+
+        <SpeedInsights />
       </body>
     </html>
   );
