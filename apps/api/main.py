@@ -39,8 +39,13 @@ from apps.api.routers.credits import router as credits_router
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     logger.info("Initializing AI Social Studio API database schemas...")
-    # Seed default plans if needed
-    logger.info("Database schemas ready. Server operational.")
+    try:
+        Base.metadata.create_all(bind=engine)
+        with SessionLocal() as db:
+            BillingService.seed_plans_if_empty(db)
+        logger.info("Database schemas ready. Server operational.")
+    except Exception as e:
+        logger.warning(f"Database schemas initialization notice: {e}")
     yield
     logger.info("Shutting down AI Social Studio API...")
 
@@ -59,6 +64,7 @@ origins = settings.CORS_ORIGINS if isinstance(settings.CORS_ORIGINS, list) else 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
+    allow_origin_regex=r"^https://.*\.vercel\.app$",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

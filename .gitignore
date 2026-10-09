@@ -39,3 +39,7 @@ media_storage/
 .idea/
 .DS_Store
 Thumbs.db
+
+.vercel
+.env*
+.neon
