@@ -28,10 +28,7 @@ from apps.api.routers.credits import router as credits_router
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     logger.info("Initializing AI Social Studio API database schemas...")
-    Base.metadata.create_all(bind=engine)
     # Seed default plans if needed
-    with SessionLocal() as db:
-        BillingService.seed_plans_if_empty(db)
     logger.info("Database schemas ready. Server operational.")
     yield
     logger.info("Shutting down AI Social Studio API...")
