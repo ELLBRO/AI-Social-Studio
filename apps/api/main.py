@@ -1,3 +1,14 @@
+# VERCEL_IMPORT_BOOTSTRAP
+import os as _vercel_os
+import sys as _vercel_sys
+import types as _vercel_types
+
+if not __package__:
+    _apps_pkg = _vercel_sys.modules.setdefault("apps", _vercel_types.ModuleType("apps"))
+    _apps_pkg.__path__ = getattr(_apps_pkg, "__path__", [])
+    _api_pkg = _vercel_sys.modules.setdefault("apps.api", _vercel_types.ModuleType("apps.api"))
+    _api_pkg.__path__ = [_vercel_os.path.dirname(_vercel_os.path.abspath(__file__))]
+
 import time
 import uuid
 from contextlib import asynccontextmanager
